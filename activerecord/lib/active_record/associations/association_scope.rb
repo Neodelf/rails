@@ -135,7 +135,7 @@ module ActiveRecord
 
           # Exclude the scope of the association itself, because that
           # was already merged in the #scope method.
-          reflection.constraints.each do |scope_chain_item|
+          reflection.constraints.reverse.each do |scope_chain_item|
             item  = eval_scope(reflection.klass, scope_chain_item, owner)
 
             if scope_chain_item == refl.scope
