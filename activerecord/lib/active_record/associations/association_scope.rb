@@ -135,7 +135,7 @@ module ActiveRecord
 
           # Exclude the scope of the association itself, because that
           # was already merged in the #scope method.
-          reflection.constraints.reverse.each do |scope_chain_item|
+          reflection.constraints.each do |scope_chain_item|
             item  = eval_scope(reflection.klass, scope_chain_item, owner)
 
             if scope_chain_item == refl.scope
@@ -148,7 +148,7 @@ module ActiveRecord
 
             scope.unscope!(*item.unscope_values)
             scope.where_clause += item.where_clause
-            scope.order_values |= item.order_values
+            scope.order_values &= item.order_values
           end
 
           reflection = reflection.next
